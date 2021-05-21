@@ -1,22 +1,28 @@
 const express = require("express");
+const body_parser = require("body-parser");
+const mangoose = require("mongoose");
 const app = express();
-const port = 3000;
+app.use(body_parser.json());
+
+require("dotenv").config();
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("good to go");
 });
 
-app.post("/", function (req, res) {
-    res.send("Got a POST request");
-});
-
-app.put("/user", function (req, res) {
-    res.send("Got a PUT request at /user");
-});
-app.delete("/user", function (req, res) {
-    res.send("Got a DELETE request at /user");
-});
+mangoose
+    .connect(process.env.DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then((result) => {
+        console.log("connected to db");
+    })
+    .catch((error) => {
+        console.log("connection to db failed" + error);
+    });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`server is up @http://localhost:${port}`);
 });
