@@ -1,9 +1,8 @@
-const mongoose = require("mongodb");
-const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-    _id: Schema.Types.ObjectId,
-    username: { type: Schema.Types.String, required: true, max: [20, "Max length is 20 characters"] },
+    username: { type: Schema.Types.String, required: true, max: [30, "Max length is 20 characters"] },
     name: {
         firstName: Schema.Types.String,
         lastName: Schema.Types.String,
@@ -15,4 +14,4 @@ const userSchema = Schema({
     contact: Schema.Types.Number,
 });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("Users", userSchema);
