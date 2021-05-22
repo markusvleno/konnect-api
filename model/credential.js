@@ -6,6 +6,7 @@ const credentialSchema = new Schema({
     email: { type: Schema.Types.String, required: true },
     pwHash: { type: Schema.Types.String, required: true },
     pwSalt: { type: Schema.Types.String, required: true },
+    userID: Schema.Types.ObjectId,
 });
 
 module.exports = mongoose.model("Credentials", credentialSchema);
