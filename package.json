@@ -4,12 +4,13 @@
     "description": "API",
     "main": "index.js",
     "scripts": {
-        "start": "BROWSER=none nodemon index.js"
+        "start": "nodemon index.js"
     },
     "author": "Markus Vleno",
     "license": "MIT",
     "dependencies": {
         "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.5",
         "dotenv": "^9.0.2",
         "express": "^4.17.1",
         "mongoose": "^5.12.10"

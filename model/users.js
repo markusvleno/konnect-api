@@ -10,7 +10,6 @@ const userSchema = Schema({
     email: { type: Schema.Types.String, required: true },
     accountCreated: Schema.Types.Date,
     profilePicture: Buffer,
-    loggedIP: Schema.Types.Array,
     contact: Schema.Types.Number,
 });
 
