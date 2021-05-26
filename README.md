@@ -1,3 +1,3 @@
 # konnect-server
-server repo
+server api repo
 
