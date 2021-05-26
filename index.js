@@ -17,14 +17,13 @@ app.use(
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
-app.set("view engine", "ejs");
 
 //routes
 const signup = require("./routes/route-signup");
 app.use("/signup", signup);
 
 const signin = require("./routes/route-signin");
-app.use("/singin", signin);
+app.use("/signin", signin);
 
 //entry point
 app.get("/", (req, res) => {
