@@ -1,0 +1,30 @@
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    background-color: var(--blue);
+    height: 70vh;
+    z-index: 2;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    border-radius: 15px 15px 0px 0px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.signIn,
+.signUp {
+    width: 30vw;
+}
+
+
+
+/* responsive */
+@media screen and (max-width: 600px) {
+    .container {
+        width: 80vw;
+        height: 600px;
+        max-height: 80vh;
+    }
+}

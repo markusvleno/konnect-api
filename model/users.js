@@ -2,15 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-    username: { type: Schema.Types.String, required: true, max: [30, "Max length is 20 characters"] },
+    _id: Schema.Types.ObjectId,
     name: {
         firstName: Schema.Types.String,
         lastName: Schema.Types.String,
     },
-    email: { type: Schema.Types.String, required: true },
-    accountCreated: Schema.Types.Date,
-    profilePicture: Buffer,
-    contact: Schema.Types.Number,
+    accountCreated: Schema.Types.String,
+    profilePicture: Schema.Types.String,
 });
 
-module.exports = mongoose.model("Users", userSchema);
+module.exports = mongoose.model("users", userSchema);
