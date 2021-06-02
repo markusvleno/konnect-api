@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const cookie_parser = require("cookie-parser");
 const morgan = require("morgan");
 const fs = require("fs");
@@ -17,6 +18,13 @@ app.use(
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
+app.use(
+    cors({
+        origin: "http://localhost:*",
+        methods: "GET,POST",
+        optionsSuccessStatus: 200,
+    }),
+);
 
 //routes
 const signup = require("./routes/route-signup");
@@ -24,6 +32,9 @@ app.use("/signup", signup);
 
 const signin = require("./routes/route-signin");
 app.use("/signin", signin);
+
+const hasUsername = require("./routes/route-hasUsername");
+app.use("/username", hasUsername);
 
 //entry point
 app.get("/", (req, res) => {

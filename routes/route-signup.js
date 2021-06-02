@@ -7,7 +7,7 @@ router.post("/", async (req, res) => {
         return res.status(601).send({ message: "already registerd" });
     } else {
         createUser(req.body);
-        res.status(600).send({ message: "registerd" });
+        res.status(200).send({ message: "registerd" });
     }
 });
 
