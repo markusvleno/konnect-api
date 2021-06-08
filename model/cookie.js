@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const miscSchema = new Schema({
+const cookieSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    cookieName: Schema.Types.String,
+    user: Schema.Types.String,
     cookieValue: Schema.Types.String,
-    cookieExp: Schema.Types.Date,
+    cookieExp: Schema.Types.Number,
 });
 
-module.exports = mongoose.model("miscs", miscSchema);
+module.exports = mongoose.model("cookies", cookieSchema);

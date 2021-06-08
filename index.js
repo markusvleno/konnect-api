@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 //middleware
 app.use(express.json());
-app.use(cookie_parser());
+app.use(cookie_parser(process.env.SECRET));
 app.use(
     morgan("combined", {
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
@@ -35,6 +35,9 @@ app.use("/signin", signin);
 
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
+
+const varifyCookie = require("./routes/route-verifyCookie");
+app.use("/verifyCookie", varifyCookie);
 
 //entry point
 app.get("/", (req, res) => {
