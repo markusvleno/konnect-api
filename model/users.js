@@ -9,6 +9,7 @@ const userSchema = Schema({
     },
     accountCreated: Schema.Types.String,
     profilePicture: Schema.Types.String,
+    token: Schema.Types.String,
 });
 
 module.exports = mongoose.model("users", userSchema);
