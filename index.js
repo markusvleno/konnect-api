@@ -36,9 +36,6 @@ app.use("/signin", signin);
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
 
-const varifyCookie = require("./routes/route-verifyCookie");
-app.use("/verifyCookie", varifyCookie);
-
 //entry point
 app.get("/", (req, res) => {
     res.send("good to go");
