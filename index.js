@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const cookie_parser = require("cookie-parser");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
@@ -12,12 +11,16 @@ const port = process.env.PORT || 3000;
 
 //middleware
 app.use(express.json());
-app.use(cookie_parser(process.env.SECRET));
+app.use(express.urlencoded({ extended: true }));
+
+require("./utils/session");
+
 app.use(
     morgan("combined", {
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
+
 app.use(
     cors({
         origin: "http://localhost:*",
