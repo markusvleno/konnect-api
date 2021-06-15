@@ -2,7 +2,7 @@ const router = require("express").Router();
 const hasUser = require("../utils/hasUser");
 const verify = require("../utils/verify");
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     const { username, password } = req.body;
 
     let user = await hasUser(username);
@@ -17,6 +17,10 @@ router.get("/", async (req, res) => {
             res.status(605).send({ message: "login failed" });
         }
     }
+});
+
+router.get("/", (req, res) => {
+    res.status(200).send({ message: "all ok" });
 });
 
 module.exports = router;
