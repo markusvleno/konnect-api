@@ -11,6 +11,7 @@
     "license": "MIT",
     "dependencies": {
         "connect-mongodb-session": "^2.4.1",
+        "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
         "dotenv": "^9.0.2",
         "express": "^4.17.1",
