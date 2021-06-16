@@ -1,12 +1,17 @@
 # https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow: /static/
 
 User-agent: *
-Disallow: /*.json$
+Disallow: /
 
 User-agent: *
 Allow: /*.html$
 
 User-agent: *
 Disallow: /*.svg$
+
+User-agent: *
+Disallow: /static
+
+User-agent: *
+Disallow: /*.json$
+

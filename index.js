@@ -2,12 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const cons = require("consolidate");
 const fs = require("fs");
 const path = require("path");
 const cookie_parser = require("cookie-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
+
+//view
+app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
 //db
 require("./config/mongoDB");
@@ -60,6 +64,10 @@ app.use(
         optionsSuccessStatus: 200,
     }),
 );
+//view engine
+app.engine("html", cons.swig);
+app.set("view engine", "html");
+app.set("views", path.join(__dirname, "views"));
 
 //routes
 const signup = require("./routes/route-signup");
@@ -70,6 +78,11 @@ app.use("/signin", signin);
 
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
+
+//404 route
+app.get("*", (req, res) => {
+    res.render("404");
+});
 
 //entry point
 app.get("/", (req, res) => {
