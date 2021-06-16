@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const https = require("https");
 const cors = require("cors");
 const morgan = require("morgan");
 const cons = require("consolidate");
@@ -79,18 +80,28 @@ app.use("/signin", signin);
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
 
-//404 route
-app.get("*", (req, res) => {
-    res.render("404");
-});
-
 //entry point
 app.get("/", (req, res) => {
     console.log(req.session);
     res.send("good to go");
 });
 
+//404 route
+app.get("*", (req, res) => {
+    res.render("404");
+});
+
+//server config
+
+const server = https.createServer(
+    {
+        key: fs.readFileSync(path.join(__dirname, "cert", "key.pem")),
+        cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
+    },
+    app,
+);
+
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`server is up @http://localhost:${port}`);
+server.listen(port, () => {
+    console.log(`server is up @https://localhost:${port}`);
 });
