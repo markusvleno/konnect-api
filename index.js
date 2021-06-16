@@ -61,8 +61,6 @@ app.use(
     }),
 );
 
-app.use(express.static(path.join(__dirname, "static")));
-
 //routes
 const signup = require("./routes/route-signup");
 app.use("/signup", signup);
@@ -77,10 +75,6 @@ app.use("/username", hasUsername);
 app.get("/", (req, res) => {
     console.log(req.session);
     res.send("good to go");
-});
-
-app.get("*", (req, res) => {
-    res.redirect("/404");
 });
 
 const port = process.env.PORT || 3000;

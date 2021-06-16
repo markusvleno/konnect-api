@@ -1,0 +1,12 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow: /static/
+
+User-agent: *
+Disallow: /*.json$
+
+User-agent: *
+Allow: /*.html$
+
+User-agent: *
+Disallow: /*.svg$
