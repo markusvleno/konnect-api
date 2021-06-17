@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const https = require("https");
+//const https = require("https");
+const http = require("http");
 const cors = require("cors");
 const morgan = require("morgan");
 const cons = require("consolidate");
@@ -92,8 +93,16 @@ app.get("*", (req, res) => {
 });
 
 //server config
+const port = process.env.PORT || 3000;
 
-const server = https.createServer(
+const serverHttp = http.createServer(app);
+
+serverHttp.listen(port, () => {
+    console.log(`server is up @http://localhost:${port}`);
+});
+
+/*
+const serverHttps = https.createServer(
     {
         key: fs.readFileSync(path.join(__dirname, "cert", "key.pem")),
         cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
@@ -101,7 +110,9 @@ const server = https.createServer(
     app,
 );
 
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
+
+serverHttps.listen(port, () => {
     console.log(`server is up @https://localhost:${port}`);
 });
+
+*/
