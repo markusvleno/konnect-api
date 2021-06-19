@@ -84,11 +84,11 @@ app.use("/username", hasUsername);
 //entry point
 app.get("/", (req, res) => {
     console.log(req.session);
-    res.send("good to go");
+    res.render("index");
 });
 
 //404 route
-app.get("*", (req, res) => {
+app.get("/404", (req, res) => {
     res.render("404");
 });
 
