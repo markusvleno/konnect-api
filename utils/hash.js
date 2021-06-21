@@ -1,7 +1,11 @@
 const { createHmac, randomBytes } = require("crypto");
 
-function hash(password, salt) {
+const hash = (password, salt) => {
     return createHmac("sha256", salt).update(password).digest("hex");
-}
+};
 
-module.exports = hash;
+const generateToken = () => {
+    return randomBytes(32).toString("hex");
+};
+
+module.exports = { hash, generateToken };

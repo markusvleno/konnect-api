@@ -8,8 +8,6 @@ const cons = require("consolidate");
 const fs = require("fs");
 const path = require("path");
 const cookie_parser = require("cookie-parser");
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
 
 //view
@@ -22,37 +20,7 @@ require("./config/mongoDB");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
-const EXPRIRES = 1000 * 60 * 60 * 24;
 
-const sessionStore = new MongoDBStore({
-    uri: process.env.DB_URL,
-    collection: "sessions",
-    expires: EXPRIRES,
-    databaseName: "test",
-    connectionOptions: {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    },
-});
-
-sessionStore.on("error", function (error) {
-    console.log(error);
-});
-
-app.use(
-    session({
-        name: "SessionID",
-        secret: process.env.SECRET,
-        store: sessionStore,
-        resave: true,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: EXPRIRES,
-            httpOnly: false,
-            secure: false,
-        },
-    }),
-);
 app.use(
     morgan("combined", {
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
@@ -61,11 +29,15 @@ app.use(
 
 app.use(
     cors({
-        origin: "http://localhost:*",
+        origin: "http://localhost",
         methods: "GET,POST",
         optionsSuccessStatus: 200,
     }),
 );
+
+//user middleware
+const { authenticate } = require("./utils/auth");
+
 //view engine
 app.engine("html", cons.swig);
 app.set("view engine", "html");
@@ -81,9 +53,12 @@ app.use("/signin", signin);
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
 
+app.get("/protected", authenticate, (req, res) => {
+    res.status(200).send("protected route");
+});
+
 //entry point
 app.get("/", (req, res) => {
-    console.log(req.session);
     res.render("index");
 });
 

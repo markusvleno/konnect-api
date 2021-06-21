@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
 const UserModel = require("../model/users");
 const CredentialModel = require("../model/credential");
-const hash = require("./hash");
+const { hash } = require("./hash");
 
 const createUser = (data) => {
     const { username, email, password, name, profilePicture } = data;
     let newUser = new UserModel({
         _id: mongoose.Types.ObjectId(),
+        username: username,
         name: { firstName: name.firstName, lastName: name.lastName },
         accountCreated: new Date().toString(),
         profilePicture: profilePicture,
+        loginToken: null,
     }).save();
 
     function makeSecret(username) {

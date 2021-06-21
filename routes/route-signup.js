@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const createUser = require("../utils/createuser");
 const hasuser = require("../utils/hasUser");
+const { authenticate } = require("../utils/auth");
+
 //entry
 router.post("/", async (req, res) => {
     if (await hasuser(req.body.username)) {
@@ -11,7 +13,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/", (req, res) => {
+router.get("/", authenticate, (req, res) => {
     res.status(200).send({ message: "all ok" });
 });
 

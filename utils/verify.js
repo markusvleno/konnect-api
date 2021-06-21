@@ -1,5 +1,5 @@
 const CredentialModel = require("../model/credential");
-const hash = require("./hash");
+const { hash } = require("./hash");
 
 const verify = async (username, password) => {
     const data = await CredentialModel.findOne({ username: username }, "pwSalt pwHash", (result) => result);
