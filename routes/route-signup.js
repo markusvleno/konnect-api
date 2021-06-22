@@ -1,20 +1,31 @@
 const router = require("express").Router();
 const createUser = require("../utils/createuser");
-const hasuser = require("../utils/hasUser");
-const { authenticate } = require("../utils/auth");
+const hasuser = require("../utils/userExist");
+
+const { validateEmailRegex, validateUsernameRegex } = require("../utils/regex");
 
 //entry
 router.post("/", async (req, res) => {
-    if (await hasuser(req.body.username)) {
-        return res.status(601).send({ message: "already registerd" });
+    const { username, password, email } = req.body;
+
+    if (!username || !password || !email) {
+        return res.status(200).send({ code: 400, message: "Insufficient data" });
+    }
+
+    if (!validateEmailRegex(email) || !validateUsernameRegex(username)) {
+        return res.status(200).send({ code: 406, message: "Not a valid data" });
+    }
+
+    if (await hasuser(username)) {
+        return res.status(200).send({ code: 406, message: "Already registerd" });
     } else {
-        createUser(req.body);
-        res.status(200).send({ message: "registerd" });
+        createUser(email, username, password);
+        return res.status(200).send({ code: 601, message: "Registerd" });
     }
 });
 
-router.get("/", authenticate, (req, res) => {
-    res.status(200).send({ message: "all ok" });
+router.get("/", (req, res) => {
+    res.status(200).send({ code: 600, message: "Bad route!" });
 });
 
 module.exports = router;

@@ -5,7 +5,11 @@ const hash = (password, salt) => {
 };
 
 const generateToken = () => {
-    return randomBytes(32).toString("hex");
+    return randomBytes(64).toString("hex");
 };
 
-module.exports = { hash, generateToken };
+const generateSecret = () => {
+    return randomBytes(64).toString("utf8");
+};
+
+module.exports = { hash, generateToken, generateSecret };

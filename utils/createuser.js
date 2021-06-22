@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const UserModel = require("../model/users");
 const CredentialModel = require("../model/credential");
-const { hash } = require("./hash");
+const { hash, generateSecret } = require("./hash");
 
 const createUser = (data) => {
     const { username, email, password, name, profilePicture } = data;
@@ -14,16 +14,14 @@ const createUser = (data) => {
         loginToken: null,
     }).save();
 
-    function makeSecret(username) {
-        return process.env.SECRET + username;
-    }
+    const secret = generateSecret();
 
     CredentialModel({
         _id: mongoose.Types.ObjectId(),
         username: username,
         email: email,
-        pwSalt: makeSecret(username),
-        pwHash: hash(password, makeSecret(username)),
+        pwSalt: secret,
+        pwHash: hash(password, secret),
         userID: newUser._id,
     }).save();
 };

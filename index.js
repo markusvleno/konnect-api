@@ -35,9 +35,6 @@ app.use(
     }),
 );
 
-//user middleware
-const { authenticate } = require("./utils/auth");
-
 //view engine
 app.engine("html", cons.swig);
 app.set("view engine", "html");
@@ -53,12 +50,13 @@ app.use("/signin", signin);
 const hasUsername = require("./routes/route-hasUsername");
 app.use("/username", hasUsername);
 
-app.get("/protected", authenticate, (req, res) => {
+app.get("/protected", (req, res) => {
     res.status(200).send("protected route");
 });
 
 //entry point
 app.get("/", (req, res) => {
+    console.log(req.cookies);
     res.render("index");
 });
 
