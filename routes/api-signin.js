@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const UserModel = require("../model/users");
-const { hasUser } = require("../utils/userExist");
+const CredentialModel = require("../model/credential");
+const { userExist } = require("../utils/userExist");
 const verify = require("../utils/verify");
 const { updateCookie } = require("../utils/cookie");
 const { validateUsernameRegex } = require("../utils/regex");
@@ -14,9 +14,17 @@ router.post("/", async (req, res) => {
         return res.status(406).send({ message: "Not a valid data" });
     }
 
-    if (await hasUser(username)) return res.status(406).send({ message: "User not registered!" });
+    if (!userExist(username)) return res.status(406).send({ message: "User not registered!" });
 
-    const validPassword = verify(username, password);
+    const data = CredentialModel.findOne({ username: username }, "pwHash pwSalt", (error, result) => {
+        if (error) return res.status(502).send({ message: error });
+
+        return result;
+    });
+
+    console.log(data);
+
+    const validPassword = verify(password, data.pwHash, data.pwSalt);
 
     if (validPassword) {
         const token = updateCookie(username);

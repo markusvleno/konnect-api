@@ -1,7 +1,7 @@
 const mangoose = require("mongoose");
 
 mangoose
-    .connect(process.env.DB_URL, {
+    .connect(process.env.DB_URL_TEST, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })

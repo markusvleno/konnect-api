@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { hasUser } = require("../utils/userExist");
+const { userExist } = require("../utils/userExist");
 
 router.get("/", async (req, res) => {
     const { username } = req.body;
@@ -10,9 +10,7 @@ router.get("/", async (req, res) => {
         return res.status(406).send({ code: 406, message: "Not a valid data" });
     }
 
-    let exist = await hasUser(username);
-
-    if (exist) {
+    if (userExist(username)) {
         res.status(406).send({ available: false, message: "username is taken" });
     } else {
         res.status(200).send({ available: true, message: "username is not taken" });

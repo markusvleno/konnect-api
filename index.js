@@ -56,7 +56,6 @@ app.get("/protected", (req, res) => {
 
 //entry point
 app.get("/", (req, res) => {
-    console.log(req.cookies);
     res.render("index");
 });
 
@@ -66,13 +65,11 @@ app.get("/404", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-    console.log(req.locals);
-    res.locals.hello = Date.now();
     res.render("test");
 });
 
 //server config
-const port = process.env.PORT || 3000;
+const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
 
 const serverHttp = http.createServer(app);
 

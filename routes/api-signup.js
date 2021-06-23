@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const createUser = require("../utils/createuser");
-const { hasuser } = require("../utils/userExist");
+const { userExist } = require("../utils/userExist");
 
 const { validateEmailRegex, validateUsernameRegex } = require("../utils/regex");
 
 //entry
 router.post("/", async (req, res) => {
-    const { username, password, email } = req.body;
+    const { username, password, email, name, profilePicture } = req.body;
 
-    if (!username || !password || !email) {
+    if (!username || !password || !email || !name || !profilePicture) {
         return res.status(400).send({ message: "Insufficient data" });
     }
 
@@ -16,10 +16,14 @@ router.post("/", async (req, res) => {
         return res.status(406).send({ message: "Not a valid data" });
     }
 
-    if (await hasuser(username)) {
+    if (await userExist(username)) {
         return res.status(406).send({ message: "Already registerd" });
     } else {
-        createUser(email, username, password);
+        try {
+            await createUser(username, password, email, name, profilePicture);
+        } catch (error) {
+            return res.status(502).send({ message: error });
+        }
         return res.status(200).send({ message: "Registerd" });
     }
 });

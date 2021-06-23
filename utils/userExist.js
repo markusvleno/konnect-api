@@ -1,14 +1,17 @@
 const CredentialModel = require("../model/credential");
 
-const hasUser = async (username) => {
+const userExist = async (username) => {
     if (!username) return false;
 
-    let user = await CredentialModel.findOne({ username: username }, (error, result) => {
-        if (error) return { error: true, message: error };
-        return result;
-    });
+    let exist;
 
-    return user ? true : false;
+    try {
+        exist = await CredentialModel.findOne({ username: username }).exec();
+    } catch (error) {
+        console.log(error);
+    }
+
+    return exist ? true : false;
 };
 
-module.exports = { hasUser };
+module.exports = { userExist };

@@ -9,7 +9,7 @@ const generateToken = () => {
 };
 
 const generateSecret = () => {
-    return randomBytes(64).toString("utf8");
+    return randomBytes(32).toString("hex");
 };
 
 module.exports = { hash, generateToken, generateSecret };
