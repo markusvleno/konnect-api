@@ -11,4 +11,4 @@ const hasUser = async (username) => {
     return user ? true : false;
 };
 
-module.exports = hasUser;
+module.exports = { hasUser };

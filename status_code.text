@@ -1,21 +1,28 @@
 
-400 : undefined value or a null parameter
-406 : value did not match the regex
+400 : Insufficient data
+406 : Not a valid data
 
 
 //signUp
 400 : Insufficient data
 406 : Not a valid data
 406 : Already registerd
-600 : bad route!, use post method   
-601 : account created, redirect to /signup
+200 : account created, redirect to /signin
+401 : bad route!, use post method   
 
-/signIn
+//signIn
 400 : Insufficient data
 406 : Not a valid data
 406 : user not registered!
 406 : username is found found in the database
-700 : bad route!, use post method
-701 : login successfull
+200 : login successfull
 401 : Unauthorized
+401 : bad route!, use post method
+
+
+//hasuser
+400 : Insufficient data
+406 : Not a valid data
+406 : username is taken
+200 : username is available
 

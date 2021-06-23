@@ -4,7 +4,6 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const morgan = require("morgan");
-const cons = require("consolidate");
 const fs = require("fs");
 const path = require("path");
 const cookie_parser = require("cookie-parser");
@@ -36,19 +35,20 @@ app.use(
 );
 
 //view engine
-app.engine("html", cons.swig);
-app.set("view engine", "html");
+//app.engine("html", cons.swig);
+//app.set("view engine", "html");
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 //routes
-const signup = require("./routes/route-signup");
-app.use("/signup", signup);
+const apisignup = require("./routes/api-signup");
+app.use("/api/v1/signup", apisignup);
 
-const signin = require("./routes/route-signin");
-app.use("/signin", signin);
+const apisignin = require("./routes/api-signin");
+app.use("/api/v1/signin", apisignin);
 
-const hasUsername = require("./routes/route-hasUsername");
-app.use("/username", hasUsername);
+const apiUsername = require("./routes/api-username");
+app.use("/api/v1/username", apiUsername);
 
 app.get("/protected", (req, res) => {
     res.status(200).send("protected route");
@@ -63,6 +63,12 @@ app.get("/", (req, res) => {
 //404 route
 app.get("/404", (req, res) => {
     res.render("404");
+});
+
+app.get("/test", (req, res) => {
+    console.log(req.locals);
+    res.locals.hello = Date.now();
+    res.render("test");
 });
 
 //server config
