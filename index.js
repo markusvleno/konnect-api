@@ -1,13 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 //const https = require("https");
-const http = require("http");
+//const http = require("http");
 const cors = require("cors");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 const cookie_parser = require("cookie-parser");
-const app = express();
+//const app = express();
+
+const app = require("./config/server").app;
+const httpServer = require("./config/server").httpServer;
 
 //view
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
@@ -71,9 +74,9 @@ app.get("/test", (req, res) => {
 //server config
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
 
-const serverHttp = http.createServer(app);
+//const serverHttp = http.createServer(app);
 
-serverHttp.listen(port, () => {
+httpServer.listen(port, () => {
     console.log(`server is up @http://localhost:${port}`);
 });
 

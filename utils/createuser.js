@@ -4,6 +4,10 @@ const CredentialModel = require("../model/credential");
 const { hash, generateSecret } = require("./hash");
 
 const createUser = async (username, password, email, name, profilePicture) => {
+    CredentialModel.watch().on("change", (data) => {
+        console.log(data);
+    });
+
     let user = new UserModel({
         _id: new mongoose.Types.ObjectId(),
         username: username,
