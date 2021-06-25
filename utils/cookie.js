@@ -3,12 +3,12 @@ const UserModel = require("../model/users");
 
 const validateCookie = async (_token) => {
     if (!_token) return false;
-    const valid = await UserModel.findOne({ loginToken: req.cookie._token }, ({ loginToken }) => {
-        if (loginToken === req.cookie._token) return true;
-        else return false;
-    });
+    const record = await UserModel.findOne({ loginToken: _token }).exec();
+    if (!record) return false;
 
-    return valid;
+    const userToken = record._doc.loginToken;
+
+    return userToken === _token ? true : false;
 };
 
 const updateCookie = async (username) => {

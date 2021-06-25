@@ -23,7 +23,7 @@
 //hasuser
 400 : Insufficient data
 406 : Not a valid data
-406 : username is taken
+200 : username is taken
 200 : username is available
 
 

@@ -15,6 +15,9 @@ const httpServer = require("./config/server").httpServer;
 //view
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
+//event
+require("./events");
+
 //db
 require("./config/mongoDB");
 
@@ -37,6 +40,8 @@ app.use(
     }),
 );
 
+const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
+
 //view engine
 //app.engine("html", cons.swig);
 //app.set("view engine", "html");
@@ -53,7 +58,11 @@ app.use("/api/v1/signin", apisignin);
 const apiUsername = require("./routes/api-username");
 app.use("/api/v1/username", apiUsername);
 
-app.get("/protected", (req, res) => {
+app.get("/login", isLoggedIn, (req, res) => {
+    res.status(200).send({ message: "OK" });
+});
+
+app.get("/protected", isNotLoggedIN, (req, res) => {
     res.status(200).send("protected route");
 });
 

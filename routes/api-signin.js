@@ -4,6 +4,7 @@ const { userExist } = require("../utils/userExist");
 const verify = require("../utils/verify");
 const { updateCookie } = require("../utils/cookie");
 const { validateUsernameRegex } = require("../utils/regex");
+const { urlencoded } = require("express");
 
 router.post("/", async (req, res) => {
     const { username, password } = req.body;
@@ -14,21 +15,15 @@ router.post("/", async (req, res) => {
         return res.status(406).send({ message: "Not a valid data" });
     }
 
-    if (!userExist(username)) return res.status(406).send({ message: "User not registered!" });
+    if (await !userExist(username)) return res.status(406).send({ message: "User not registered!" });
 
-    const data = CredentialModel.findOne({ username: username }, "pwHash pwSalt", (error, result) => {
-        if (error) return res.status(502).send({ message: error });
+    const data = await CredentialModel.findOne({ username: username }, "pwHash pwSalt").exec();
 
-        return result;
-    });
-
-    console.log(data);
-
-    const validPassword = verify(password, data.pwHash, data.pwSalt);
+    const validPassword = verify(password, data._doc.pwHash, data._doc.pwSalt);
 
     if (validPassword) {
-        const token = updateCookie(username);
-        res.cookie("_token", token, { maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) }); //expire after 30days
+        const token = await updateCookie(username);
+        res.cookie("_token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 }); //expire after 30days
         res.status(200).send({ message: "Login Successfull" });
     } else {
         res.status(401).send({ message: "Unauthorized " });

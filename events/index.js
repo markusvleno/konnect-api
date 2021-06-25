@@ -1,18 +1,25 @@
-const mongoose = require("mongoose");
-const socket = require("socket.io");
-const app = require("express")();
-const userdb = mongoose.connection.collection("users");
-
-let changeStream;
-
-(async () => {
-    try {
-        changeStream = userdb.watch();
-
-        changeStream.on("change", (next) => {
-            console.log(next);
+const { Server } = require("socket.io");
+const httpServer = require("../config/server").httpServer;
+const MongoClient = require("mongodb").MongoClient;
+try {
+    (async () => {
+        const mongo = new MongoClient(require("../config/mongoDB").DB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
         });
-    } catch (error) {
-        console.error(`\nError occoured @${Date.now()} : ${error}`);
-    }
-})();
+        await mongo.connect();
+
+        let userStream = await mongo.db(require("../config/mongoDB").DB_NAME).collection("users").watch();
+        let credentialStream = await mongo.db(require("../config/mongoDB").DB_NAME).collection("credentials").watch();
+
+        userStream.on("change", (data) => {
+            console.log(data);
+        });
+
+        credentialStream.on("change", (data) => {
+            console.log(data);
+        });
+    })();
+} catch (error) {
+    console.log(error);
+}

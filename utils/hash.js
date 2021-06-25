@@ -5,7 +5,7 @@ const hash = (password, salt) => {
 };
 
 const generateToken = () => {
-    return randomBytes(64).toString("hex");
+    return randomBytes(20).toString("hex");
 };
 
 const generateSecret = () => {

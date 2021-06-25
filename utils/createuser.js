@@ -14,7 +14,7 @@ const createUser = async (username, password, email, name, profilePicture) => {
         name: { firstName: name.firstName || "First name not found", lastName: name.lastName || "Last name not found" },
         accountCreated: new Date().toString(),
         profilePicture: profilePicture,
-        loginToken: null,
+        loginToken: "no token",
     });
 
     user.save((error, newUser) => {
