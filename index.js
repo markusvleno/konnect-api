@@ -31,7 +31,8 @@ app.use(
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
-
+app.use(cors());
+/*
 app.use(
     cors({
         origin: "http://localhost",
@@ -39,7 +40,7 @@ app.use(
         optionsSuccessStatus: 200,
     }),
 );
-
+*/
 const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
 
 //view engine
