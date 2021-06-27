@@ -2,9 +2,8 @@ const router = require("express").Router();
 const { userExist } = require("../utils/userExist");
 const { validateUsernameRegex } = require("../utils/regex");
 
-router.get("/", async (req, res) => {
-    const { username } = req.body;
-    console.log(req.body);
+router.post("/", async (req, res) => {
+    const { username } = req.body.data;
 
     if (!username) return res.status(200).send({ code: 400, message: "Insufficient data" });
 
@@ -19,8 +18,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", (req, res) => {
-    res.status(401).send({ message: "only get mothod is allowed" });
+router.get("/", (req, res) => {
+    res.status(401).send({ message: "only POST mothod is allowed" });
 });
 
 module.exports = router;

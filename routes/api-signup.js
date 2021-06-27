@@ -6,7 +6,7 @@ const { validateEmailRegex, validateUsernameRegex } = require("../utils/regex");
 
 //entry
 router.post("/", async (req, res) => {
-    const { username, password, email, name, profilePicture } = req.body;
+    const { username, password, email, name, profilePicture } = req.body.data;
 
     if (!username || !password || !email || !name || !profilePicture) {
         return res.status(400).send({ message: "Insufficient data" });

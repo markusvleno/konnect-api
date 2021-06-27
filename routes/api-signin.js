@@ -7,7 +7,7 @@ const { validateUsernameRegex } = require("../utils/regex");
 const { urlencoded } = require("express");
 
 router.post("/", async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body.data;
 
     if (!username || !password) return res.status(400).send({ message: "Insufficient data" });
 
