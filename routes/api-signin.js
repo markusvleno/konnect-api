@@ -8,13 +8,13 @@ const { validateUsernameRegex } = require("../utils/regex");
 router.post("/", async (req, res) => {
     const { username, password } = req.body.data;
 
-    if (!username || !password) return res.status(400).send({ message: "Insufficient data" });
+    if (!username || !password) return res.status(20).send({ code: 400, message: "Insufficient data" });
 
     if (!validateUsernameRegex(username)) {
-        return res.status(406).send({ message: "Not a valid data" });
+        return res.status(200).send({ code: 406, message: "Not a valid data" });
     }
 
-    if (await !userExist(username)) return res.status(406).send({ message: "User not registered!" });
+    if (await !userExist(username)) return res.status(200).send({ code: 406, message: "User not registered!" });
 
     const data = await CredentialModel.findOne({ username: username }, "pwHash pwSalt").exec();
 
@@ -23,9 +23,9 @@ router.post("/", async (req, res) => {
     if (validPassword) {
         const token = await updateCookie(username);
         res.cookie("_token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 }); //expire after 30days
-        res.redirect("/protected");
+        res.redirect("http://localhost:5000");
     } else {
-        res.status(401).send({ message: "Unauthorized " });
+        res.status(200).send({ code: 401, message: "Unauthorized " });
     }
 });
 

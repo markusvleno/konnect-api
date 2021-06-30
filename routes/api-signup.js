@@ -9,22 +9,22 @@ router.post("/", async (req, res) => {
     const { username, password, email, name } = req.body.data;
 
     if (!username || !password || !email || !name) {
-        return res.status(400).send({ message: "Insufficient data" });
+        return res.status(200).send({ code: 400, message: "Insufficient data" });
     }
 
     if (!validateEmailRegex(email) || !validateUsernameRegex(username)) {
-        return res.status(406).send({ message: "Not a valid data" });
+        return res.status(200).send({ code: 406, message: "Not a valid data" });
     }
 
     if (await userExist(username)) {
-        return res.status(406).send({ message: "Already registerd" });
+        return res.status(200).send({ code: 406, message: "Already registerd" });
     } else {
         try {
             await createUser(username, password, email, name);
         } catch (error) {
-            return res.status(502).send({ message: error });
+            return res.status(200).send({ code: 502, message: error });
         }
-        return res.status(200).send({ message: "Registerd" });
+        return res.status(200).send({ code: 200, message: "Registerd" });
     }
 });
 
