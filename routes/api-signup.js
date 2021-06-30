@@ -6,9 +6,9 @@ const { validateEmailRegex, validateUsernameRegex } = require("../utils/regex");
 
 //entry
 router.post("/", async (req, res) => {
-    const { username, password, email, name, profilePicture } = req.body.data;
+    const { username, password, email, name } = req.body.data;
 
-    if (!username || !password || !email || !name || !profilePicture) {
+    if (!username || !password || !email || !name) {
         return res.status(400).send({ message: "Insufficient data" });
     }
 
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
         return res.status(406).send({ message: "Already registerd" });
     } else {
         try {
-            await createUser(username, password, email, name, profilePicture);
+            await createUser(username, password, email, name);
         } catch (error) {
             return res.status(502).send({ message: error });
         }

@@ -3,17 +3,12 @@ const UserModel = require("../model/users");
 const CredentialModel = require("../model/credential");
 const { hash, generateSecret } = require("./hash");
 
-const createUser = async (username, password, email, name, profilePicture) => {
-    CredentialModel.watch().on("change", (data) => {
-        console.log(data);
-    });
-
+const createUser = async (username, password, email, name) => {
     let user = new UserModel({
         _id: new mongoose.Types.ObjectId(),
         username: username,
-        name: { firstName: name.firstName || "First name not found", lastName: name.lastName || "Last name not found" },
+        name: name,
         accountCreated: new Date().toString(),
-        profilePicture: profilePicture,
         loginToken: "no token",
     });
 

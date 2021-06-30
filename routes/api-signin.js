@@ -4,7 +4,6 @@ const { userExist } = require("../utils/userExist");
 const verify = require("../utils/verify");
 const { updateCookie } = require("../utils/cookie");
 const { validateUsernameRegex } = require("../utils/regex");
-const { urlencoded } = require("express");
 
 router.post("/", async (req, res) => {
     const { username, password } = req.body.data;
@@ -24,7 +23,7 @@ router.post("/", async (req, res) => {
     if (validPassword) {
         const token = await updateCookie(username);
         res.cookie("_token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 }); //expire after 30days
-        res.status(200).send({ message: "Login Successfull" });
+        res.redirect("/protected");
     } else {
         res.status(401).send({ message: "Unauthorized " });
     }
