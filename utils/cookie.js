@@ -1,4 +1,3 @@
-const { generateToken } = require("../utils/hash");
 const UserModel = require("../model/users");
 
 const validateCookie = async (_token) => {
@@ -11,10 +10,8 @@ const validateCookie = async (_token) => {
     return userToken === _token ? true : false;
 };
 
-const updateCookie = async (username) => {
-    const token = generateToken();
+const updateCookie = async (username, token) => {
     await UserModel.updateOne({ username: username }, { loginToken: token });
-    return token;
 };
 
 module.exports = { validateCookie, updateCookie };

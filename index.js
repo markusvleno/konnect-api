@@ -7,6 +7,8 @@ const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 const cookie_parser = require("cookie-parser");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 //const app = express();
 
 const app = require("./config/server").app;
@@ -25,7 +27,17 @@ require("./config/mongoDB");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
-
+const store = new MongoDBStore({ uri: require("./config/mongoDB").DB_URL, collection: "session" });
+app.use(
+    session({
+        name: "_token",
+        secret: process.env.SECRET,
+        store: store,
+        resave: true,
+        saveUninitialized: true,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 * 30, secure: false },
+    }),
+);
 app.use(
     morgan("combined", {
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
@@ -41,15 +53,18 @@ app.use(
     }),
 );
 */
-const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
 
 //view engine
+app.set("views", path.join(__dirname, "views"));
 //app.engine("html", cons.swig);
 //app.set("view engine", "html");
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+//app.set("view engine", "jsx");
+//app.engine("jsx", require("express-react-views").createEngine({ beautify: false, doctype: "<!DOCTYPE html>" }));
 
 //routes
+const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
+
 const apisignup = require("./routes/api-signup");
 app.use("/api/v1/signup", apisignup);
 
@@ -60,7 +75,7 @@ const apiUsername = require("./routes/api-username");
 app.use("/api/v1/username", apiUsername);
 
 app.get("/login", isLoggedIn, (req, res) => {
-    res.status(200).send({ message: "OK" });
+    res.render("login");
 });
 
 app.get("/protected", isNotLoggedIN, (req, res) => {
@@ -69,7 +84,8 @@ app.get("/protected", isNotLoggedIN, (req, res) => {
 
 //entry point
 app.get("/", (req, res) => {
-    res.render("index");
+    //res.render("index");
+    res.send("hello");
 });
 
 //404 route

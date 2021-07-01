@@ -21,9 +21,9 @@ router.post("/", async (req, res) => {
     const validPassword = verify(password, data._doc.pwHash, data._doc.pwSalt);
 
     if (validPassword) {
-        const token = await updateCookie(username);
-        res.cookie("_token", token, { maxAge: 1000 * 60 * 60 * 24 * 30 }); //expire after 30days
-        res.redirect("http://localhost:5000");
+        const token = req.session.cookie.token || "";
+        await updateCookie(username, token);
+        res.redirect("/protected");
     } else {
         res.status(200).send({ code: 401, message: "Unauthorized " });
     }
