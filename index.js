@@ -79,7 +79,7 @@ app.get("/login", isLoggedIn, (req, res) => {
 });
 
 app.get("/protected", isNotLoggedIN, (req, res) => {
-    res.status(200).send("protected route");
+    res.status(200).send(`<h1 style="text-align:center;margin-top: 50vh">Good to go</h1>`);
 });
 
 //entry point

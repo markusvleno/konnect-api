@@ -8,7 +8,7 @@ const { validateUsernameRegex } = require("../utils/regex");
 router.post("/", async (req, res) => {
     const { username, password } = req.body.data;
 
-    if (!username || !password) return res.status(20).send({ code: 400, message: "Insufficient data" });
+    if (!username || !password) return res.status(200).send({ code: 400, message: "Insufficient data" });
 
     if (!validateUsernameRegex(username)) {
         return res.status(200).send({ code: 406, message: "Not a valid data" });
@@ -21,11 +21,11 @@ router.post("/", async (req, res) => {
     const validPassword = verify(password, data._doc.pwHash, data._doc.pwSalt);
 
     if (validPassword) {
-        const token = req.session.cookie.token || "";
+        const token = req.cookies._token || "";
         await updateCookie(username, token);
-        res.redirect("/protected");
+        res.status(200).send({ code: 301, redirect: "/protected" });
     } else {
-        res.status(200).send({ code: 401, message: "Unauthorized " });
+        res.status(200).send({ code: 401, message: "Wrong password! " });
     }
 });
 
