@@ -3,20 +3,15 @@ const Schema = mongoose.Schema;
 
 const chatSchema = Schema({
     _id: Schema.Types.ObjectId,
-    userID: Schema.Types.ObjectId,
-    conversation: [
+    ChatID: Schema.Types.ObjectId,
+    ChatChannel: Schema.Types.String,
+    messages: [
         {
-            convID: Schema.Types.Number,
-            username: Schema.Types.String,
-            messages: [
-                {
-                    origin: { type: Schema.Types.Boolean, default: true },
-                    msgID: Schema.Types.Number,
-                    message: Schema.Types.Mixed,
-                    type: Schema.Types.String,
-                    timeStamp: { type: Schema.Types.Date, default: new Date() },
-                },
-            ],
+            origin: { type: Schema.Types.String },
+            msgID: Schema.Types.Number,
+            message: Schema.Types.Mixed,
+            type: Schema.Types.String,
+            timeStamp: { type: Schema.Types.Number, default: Date.now() },
         },
     ],
 });

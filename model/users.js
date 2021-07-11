@@ -7,6 +7,8 @@ const userSchema = Schema({
     name: { type: Schema.Types.String, require: true, max: [25, "Max length is 25 characters"] },
     accountCreated: Schema.Types.String,
     loginToken: Schema.Types.String,
+    friendList: { type: Schema.Types.Array, default: [] },
+    friendRequest: { type: Schema.Types.Array, default: [] },
 });
 
 module.exports = mongoose.model("users", userSchema);
