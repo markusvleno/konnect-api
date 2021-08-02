@@ -27,6 +27,7 @@ require("./config/mongoDB");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
+app.use(cors());
 const store = new MongoDBStore({ uri: require("./config/mongoDB").DB_URL, collection: "session" });
 app.use(
     session({
@@ -43,7 +44,6 @@ app.use(
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
-app.use(cors());
 /*
 app.use(
     cors({
