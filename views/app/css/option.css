@@ -1,0 +1,79 @@
+.option {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 230px 50px;
+    align-content: center;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0px 10px;
+}
+
+.control-svg {
+    width: 25px;
+    height: 25px;
+}
+
+.control-svg svg {
+    height: inherit;
+    width: inherit;
+}
+
+.control-svg:hover svg path {
+    fill: var(--front);
+}
+
+/*
+.control-svg:hover {
+    background-color: var(--front);
+}
+.tab-conversation {
+    mask: url("../images/conversation.svg") no-repeat center;
+}
+
+.tab-add {
+    mask: url("../images/add_friend.svg") no-repeat center;
+}
+
+.tab-settings {
+    mask: url("../images/settings.svg") no-repeat center;
+}
+
+.tab-logout {
+    mask: url("../images/logout.svg") no-repeat center;
+}
+*/
+
+/*
+mobile view port
+*/
+
+@media screen and (max-width: 900px) {
+    .option {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        justify-content: flex-end;
+    }
+
+    .controls > * {
+        margin: 0px 7px;
+    }
+
+    .control-svg {
+        height: 40px;
+    }
+    .control-svg svg {
+        height: inherit;
+        width: inherit;
+    }
+
+    .me-photo {
+        display: none;
+    }
+}

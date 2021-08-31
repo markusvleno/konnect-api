@@ -1,7 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-//const https = require("https");
-//const http = require("http");
 const cors = require("cors");
 const morgan = require("morgan");
 const fs = require("fs");
@@ -9,7 +7,6 @@ const path = require("path");
 const cookie_parser = require("cookie-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-//const app = express();
 
 const app = require("./config/server").app;
 const httpServer = require("./config/server").httpServer;
@@ -44,23 +41,20 @@ app.use(
         stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
     }),
 );
-/*
-app.use(
-    cors({
-        origin: "http://localhost",
-        methods: "GET,POST",
-        optionsSuccessStatus: 200,
-    }),
-);
-*/
 
-//view engine
+//view
 app.set("views", path.join(__dirname, "views"));
+
+//view engines
+
 //app.engine("html", cons.swig);
 //app.set("view engine", "html");
-app.set("view engine", "ejs");
-//app.set("view engine", "jsx");
-//app.engine("jsx", require("express-react-views").createEngine({ beautify: false, doctype: "<!DOCTYPE html>" }));
+//app.set("view engine", "ejs");
+app.set("view engine", "jsx");
+app.engine(
+    "jsx",
+    require("express-react-views").createEngine({ beautify: false, doctype: "<!DOCTYPE html>", transformViews: true }),
+);
 
 //routes
 const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
@@ -84,7 +78,6 @@ app.get("/protected", isNotLoggedIN, (req, res) => {
 
 //entry point
 app.get("/", (req, res) => {
-    //res.render("index");
     res.send("hello");
 });
 
@@ -95,6 +88,11 @@ app.get("/404", (req, res) => {
 
 app.get("/test", (req, res) => {
     res.render("test");
+});
+
+app.get("/app", (req, res) => {
+    const data = { lol: "lol" };
+    res.render("app", { data });
 });
 
 //server config
