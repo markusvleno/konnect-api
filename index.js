@@ -83,7 +83,8 @@ app.get("/", (req, res) => {
 
 //404 route
 app.get("/404", (req, res) => {
-    res.render("404");
+    const data = "lol";
+    res.render("page404", { data });
 });
 
 app.get("/test", (req, res) => {

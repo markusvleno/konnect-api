@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js --port 5000",
-        "dev": "nodemon index.js -e js,mjs,json,jsx",
+        "dev": "nodemon index.js -e js,mjs,json,jsx --port 5000",
         "test": "jest"
     },
     "author": "Markus Vleno",

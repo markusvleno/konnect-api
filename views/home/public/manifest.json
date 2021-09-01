@@ -1,0 +1,15 @@
+{
+    "short_name": "konnect",
+    "name": "konnect messanger",
+    "icons": [
+        {
+            "src": "logo.svg",
+            "sizes": "512x512 256x256 128x128 64x64 32x32 24x24 16x16",
+            "type": "image/svg"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#20bf55",
+    "background_color": "#1f2022"
+}
