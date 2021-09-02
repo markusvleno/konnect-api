@@ -15,7 +15,7 @@ const httpServer = require("./config/server").httpServer;
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
 //event
-require("./events");
+// require("./events");
 
 //db
 require("./config/mongoDB");
@@ -49,12 +49,9 @@ app.set("views", path.join(__dirname, "views"));
 
 //app.engine("html", cons.swig);
 //app.set("view engine", "html");
-//app.set("view engine", "ejs");
-app.set("view engine", "jsx");
-app.engine(
-    "jsx",
-    require("express-react-views").createEngine({ beautify: false, doctype: "<!DOCTYPE html>", transformViews: true }),
-);
+app.set("view engine", "ejs");
+// app.set("view engine", "jsx");
+// app.engine("jsx", require("express-react-views").createEngine({ beautify: false, doctype: "<!DOCTYPE html>" }));
 
 //routes
 const { isLoggedIn, isNotLoggedIN } = require("./utils/authentication");
@@ -83,17 +80,7 @@ app.get("/", (req, res) => {
 
 //404 route
 app.get("/404", (req, res) => {
-    const data = "lol";
-    res.render("page404", { data });
-});
-
-app.get("/test", (req, res) => {
-    res.render("test");
-});
-
-app.get("/app", (req, res) => {
-    const data = { lol: "lol" };
-    res.render("app", { data });
+    res.render("404");
 });
 
 //server config

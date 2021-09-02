@@ -11,6 +11,8 @@
     "author": "Markus Vleno",
     "license": "MIT",
     "dependencies": {
+        "@babel/preset-env": "^7.15.0",
+        "@babel/preset-react": "^7.14.5",
         "@reduxjs/toolkit": "^1.6.1",
         "axios": "^0.21.1",
         "connect-mongodb-session": "^2.4.1",
