@@ -15,7 +15,7 @@ const httpServer = require("./config/server").httpServer;
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
 //event
-// require("./events");
+require("./events");
 
 //db
 require("./config/mongoDB");
@@ -82,6 +82,17 @@ app.get("/", (req, res) => {
 app.get("/404", (req, res) => {
     res.render("404");
 });
+
+// app.get("/test", (req, res) => {
+//     res.send({
+//         user: {
+//             username: "Markus",
+//             name: "Makrus",
+//             profilePicture: "/static/assets/images/profile.svg",
+//             conversation: [],
+//         },
+//     });
+// });
 
 //server config
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
