@@ -83,16 +83,16 @@ app.get("/404", (req, res) => {
     res.render("404");
 });
 
-// app.get("/test", (req, res) => {
-//     res.send({
-//         user: {
-//             username: "Markus",
-//             name: "Makrus",
-//             profilePicture: "/static/assets/images/profile.svg",
-//             conversation: [],
-//         },
-//     });
-// });
+app.get("/test", (req, res) => {
+    res.send({
+        user: {
+            username: "Markus",
+            name: "Makrus",
+            profilePicture: "/static/assets/images/profile.svg",
+            conversation: [],
+        },
+    });
+});
 
 //server config
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
