@@ -1,12 +1,17 @@
-const { wss } = require("../config/socket");
+const { wss, chatSocket } = require("../config/socket");
 const { v4 } = require("uuid");
 
 let connectionList = [];
+
+chatSocket.on("connection", (socket) => {
+    console.log(socket.id);
+});
 
 //default handler
 wss.on("connection", (socket) => {
     console.log("brah");
     console.log(socket.id + " tried to connect :/ path");
+    socket.disconnect(true);
 });
 
 // export default class WebSockets {
