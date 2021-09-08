@@ -1,20 +1,12 @@
-const httpServer = require("../config/server").httpServer;
-const socket = require("socket.io");
+const { wss } = require("../config/socket");
 const { v4 } = require("uuid");
 
-// dev cors
-const cors = {
-    origin: ["http://localhost:3000"],
-};
+let connectionList = [];
 
-const wss = new socket.Server(httpServer, {
-    serveClient: false,
-    cookie: true,
-    cors: cors,
-});
-
+//default handler
 wss.on("connection", (socket) => {
-    socket.emit("wss", { wss: wss });
+    console.log("brah");
+    console.log(socket.id + " tried to connect :/ path");
 });
 
 // export default class WebSockets {
