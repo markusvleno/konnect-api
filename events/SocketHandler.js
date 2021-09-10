@@ -1,10 +1,24 @@
 const { wss, chatSocket } = require("../config/socket");
 const { v4 } = require("uuid");
+const UserModel = require("../model/users");
+const { validateCookie } = require("../utils/cookie");
 
-let connectionList = [];
+let chatConnections = [];
 
 chatSocket.on("connection", (socket) => {
+    let { _token } = socket.request.headers.cookie;
+    let { username } = socket.handshake.query;
+
+    // if (!validateCookie(_token)) {
+    //     socket.disconnect(true);
+    //     return;
+    // }
+
     console.log(socket.id);
+    chatConnections.push({
+        username,
+        socketID: socket.id,
+    });
 });
 
 //default handler

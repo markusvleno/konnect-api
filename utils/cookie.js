@@ -1,7 +1,8 @@
 const UserModel = require("../model/users");
 
 const validateCookie = async (_token) => {
-    if (!_token) return false;
+    if (!_token || typeof _token !== "string") return false;
+
     const record = await UserModel.findOne({ loginToken: _token }).exec();
     if (!record) return false;
 
