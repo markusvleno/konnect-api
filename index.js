@@ -65,6 +65,9 @@ app.use("/api/v1/signin", apisignin);
 const apiUsername = require("./routes/api-username");
 app.use("/api/v1/username", apiUsername);
 
+const apiUser = require("./routes/api-user");
+app.use("/api/v1/user", apiUser);
+
 app.get("/login", isLoggedIn, (req, res) => {
     res.render("login");
 });

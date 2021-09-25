@@ -6,7 +6,7 @@ const { validateCookie } = require("../utils/cookie");
 let chatConnections = [];
 
 chatSocket.on("connection", (socket) => {
-    let { _token } = socket.request.headers.cookie;
+    let cookie = socket.request.headers.cookie;
     let { username } = socket.handshake.query;
 
     // if (!validateCookie(_token)) {
@@ -14,7 +14,6 @@ chatSocket.on("connection", (socket) => {
     //     return;
     // }
 
-    console.log(socket.id);
     chatConnections.push({
         username,
         socketID: socket.id,
