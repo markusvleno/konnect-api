@@ -15,7 +15,7 @@ const httpServer = require("./config/server").httpServer;
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
 //event
-require("./events");
+// require("./events");
 
 //db
 require("./config/mongoDB");
@@ -67,6 +67,9 @@ app.use("/api/v1/username", apiUsername);
 
 const apiUser = require("./routes/api-user");
 app.use("/api/v1/user", apiUser);
+
+const bundle = require("./routes/api-bundle");
+app.use("/api/v1/bundle", bundle);
 
 app.get("/login", isLoggedIn, (req, res) => {
     res.render("login");
