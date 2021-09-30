@@ -15,7 +15,7 @@ const httpServer = require("./config/server").httpServer;
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
 
 //event
-// require("./events");
+require("./events");
 
 //db
 require("./config/mongoDB");
