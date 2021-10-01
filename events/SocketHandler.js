@@ -1,7 +1,7 @@
 const { wss, chatSocket } = require("../config/socket");
-const { v4 } = require("uuid");
-const UserModel = require("../model/users");
-const { validateCookie } = require("../utils/cookie");
+// const { v4 } = require("uuid");
+// const UserModel = require("../model/users");
+// const { validateCookie } = require("../utils/cookie");
 
 let connections = [];
 
@@ -14,19 +14,29 @@ chatSocket.on("connection", (skt) => {
     skt.on("send-message", (req, cb) => {
         const { _msgToSend } = req;
 
-        const userSocketId = connections.filter((con) => {
-            return con.userId === _msgToSend.sender.userId;
+        let destConnection = null;
+
+        connections.forEach((con) => {
+            if (con.userId === _msgToSend.receiver.userId) destConnection = con;
         });
 
-        console.log(userSocketId);
-
-        if (!userSocketId) {
+        if (!destConnection) {
             //abort event
             cb(false);
             return;
         }
 
-        cb(true);
+        const destSocket = chatSocket.sockets.get(destConnection.socketId);
+
+        if (!destSocket) {
+            //abort event
+            cb(false);
+            return;
+        }
+
+        destSocket.emit("receive-message", _msgToSend, () => {
+            cb(true); //success
+        });
     });
 
     skt.on("disconnect", (reason) => {
