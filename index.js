@@ -68,6 +68,9 @@ app.use("/api/v1/username", apiUsername);
 const apiUser = require("./routes/api-user");
 app.use("/api/v1/user", apiUser);
 
+const apiConfig = require("./routes/api-config");
+app.use("/api/v1/config", apiConfig);
+
 const bundle = require("./routes/api-bundle");
 app.use("/api/v1/bundle", bundle);
 
