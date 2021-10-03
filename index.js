@@ -78,8 +78,8 @@ app.get("/login", isLoggedIn, (req, res) => {
     res.render("login");
 });
 
-app.get("/protected", isNotLoggedIN, (req, res) => {
-    res.status(200).send(`<h1 style="text-align:center;margin-top: 50vh">Good to go</h1>`);
+app.get("/app", isNotLoggedIN, (req, res) => {
+    res.render("app");
 });
 
 //entry point

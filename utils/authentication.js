@@ -7,7 +7,7 @@ const isLoggedIn = async (req, res, next) => {
         next();
     } else {
         if (await validateCookie(_token)) {
-            return res.redirect("/protected");
+            return res.redirect("/app");
         } else {
             res.clearCookie("_token", { path: "/" });
             next();
