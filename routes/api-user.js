@@ -9,7 +9,6 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const { _token } = req.cookies;
         const { username, userId } = req.query;
 
         if (!username && !userId) {
@@ -17,7 +16,7 @@ router.get("/", async (req, res) => {
         }
 
         if (username) {
-            UserModel.findOne({ loginToken: _token }, (err, docs) => {
+            UserModel.findOne({ username: username }, (err, docs) => {
                 if (err) return res.status(200).send({ code: 502, message: "database error", rawError: err });
 
                 if (!docs) return res.status(200).send({ code: 404, message: "user not found!" });

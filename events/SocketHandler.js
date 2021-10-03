@@ -26,17 +26,19 @@ chatSocket.on("connection", (skt) => {
             return;
         }
 
-        const destSocket = chatSocket.sockets.get(destConnection.socketId);
+        chatSocket.to(destConnection.socketId).emit("receive-message", _msgToSend);
 
-        if (!destSocket) {
-            //abort event
-            cb(false);
-            return;
-        }
+        // const destSocket = chatSocket.sockets.get(destConnection.socketId);
 
-        destSocket.emit("receive-message", _msgToSend, () => {
-            cb(true); //success
-        });
+        // if (!destSocket) {
+        //     //abort event
+        //     cb(false);
+        //     return;
+        // }
+
+        // destSocket.emit("receive-message", _msgToSend);
+
+        cb(true); //success
     });
 
     skt.on("disconnect", (reason) => {

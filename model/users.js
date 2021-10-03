@@ -8,7 +8,7 @@ const userSchema = Schema({
     accountCreated: Schema.Types.String,
     loginToken: Schema.Types.String,
     socketID: Schema.Types.String,
-    bundle: {type: Schema.Types.Object,default: null  },
+    bundle: { type: Schema.Types.String, default: null },
     friendList: { type: Schema.Types.Array, default: [] },
 });
 
