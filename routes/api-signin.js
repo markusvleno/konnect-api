@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     if (validPassword) {
         const token = req.cookies._token || "";
         await updateCookie(username, token);
-        res.status(200).send({ code: 301, redirect: "/protected" });
+        res.status(200).send({ code: 301, redirect: "/app" });
     } else {
         res.status(200).send({ code: 401, message: "Wrong password! " });
     }

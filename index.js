@@ -84,7 +84,7 @@ app.get("/app", isNotLoggedIN, (req, res) => {
 
 //entry point
 app.get("/", (req, res) => {
-    res.send("hello");
+    res.redirect("/app");
 });
 
 //404 route
