@@ -8,8 +8,7 @@ const cookie_parser = require("cookie-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 
-const app = require("./config/server").app;
-const httpServer = require("./config/server").httpServer;
+const { app, httpsServer } = require("./config/server");
 
 //view
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
@@ -106,24 +105,6 @@ app.get("/test", (req, res) => {
 //server config
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
 
-//const serverHttp = http.createServer(app);
-
-httpServer.listen(port, () => {
+httpsServer.listen(port, () => {
     console.log(`server is up @http://localhost:${port}`);
 });
-
-/*
-const serverHttps = https.createServer(
-    {
-        key: fs.readFileSync(path.join(__dirname, "cert", "key.pem")),
-        cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
-    },
-    app,
-);
-
-
-serverHttps.listen(port, () => {
-    console.log(`server is up @https://localhost:${port}`);
-});
-
-*/
