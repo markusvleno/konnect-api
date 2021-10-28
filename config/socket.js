@@ -6,7 +6,6 @@ const wss = new socketio.Server(httpServer, {
     serveClient: false,
     cookie: true,
     cors: {
-        origin: ["http://localhost:3000"],
         credentials: true,
     },
 });
