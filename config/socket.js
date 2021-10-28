@@ -1,7 +1,7 @@
-const httpServer = require("./server").httpServer;
+const { httpsServer } = require("./server");
 const socketio = require("socket.io");
 
-const wss = new socketio.Server(httpServer, {
+const wss = new socketio.Server(httpsServer, {
     path: "/sockets",
     serveClient: false,
     cookie: true,
