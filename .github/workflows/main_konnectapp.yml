@@ -10,7 +10,6 @@ on:
 
 env:
     PRODUCTION: production
-    PROJ_PATH: pwd
 
 jobs:
     build:
@@ -37,5 +36,4 @@ jobs:
         steps:
             - name: deploy
               run: |
-                  ${{env.PROJ_PATH}}
                   NODE_ENV=${{env.PRODUCTION}} node index.js
