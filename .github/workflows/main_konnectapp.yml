@@ -36,5 +36,4 @@ jobs:
         steps:
             - name: deploy
               run: |
-                  ls -la
-                  NODE_ENV=${{env.PRODUCTION}} node index.js
+                  npm start
