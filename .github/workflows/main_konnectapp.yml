@@ -10,7 +10,7 @@ on:
 
 env:
     PRODUCTION: production
-    PROJ_PATH: "."
+    PROJ_PATH: pwd
 
 jobs:
     build:
