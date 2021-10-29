@@ -35,11 +35,14 @@ app.use(
         cookie: { maxAge: 1000 * 60 * 60 * 24 * 30, secure: false },
     }),
 );
-app.use(
-    morgan("combined", {
-        stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
-    }),
-);
+
+if (process.env.process.env.NODE_ENV !== "production") {
+    app.use(
+        morgan("combined", {
+            stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
+        }),
+    );
+}
 
 //view
 app.set("views", path.join(__dirname, "views"));
