@@ -37,4 +37,5 @@ jobs:
         steps:
             - name: deploy
               run: |
-                  NODE_ENV=${{env.PRODUCTION}} node '${{env.PROJ_PATH}}/index.js'
+                  ${{env.PROJ_PATH}}
+                  NODE_ENV=${{env.PRODUCTION}} node index.js
