@@ -12,6 +12,7 @@ RUN mkdir -p /home/konnect
 
 COPY . /home/konnect
 
+RUN mkdir -p /home/konnect/log
 RUN touch /home/konnect/log/server.log
 
 CMD [ "node","/home/konnect/index.js" ]
