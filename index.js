@@ -36,7 +36,7 @@ app.use(
     }),
 );
 
-if (process.env.process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
     app.use(
         morgan("combined", {
             stream: fs.createWriteStream(path.join(__dirname, "log", "server.log"), { flags: "a" }),
