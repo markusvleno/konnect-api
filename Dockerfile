@@ -15,6 +15,5 @@ COPY . /home/konnect
 RUN mkdir -p /home/konnect/log
 RUN touch /home/konnect/log/server.log
 
-RUN npm install
 
 CMD [ "node","/home/konnect/index.js" ]
