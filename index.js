@@ -8,7 +8,7 @@ const cookie_parser = require("cookie-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 
-const { app, httpsServer } = require("./config/server");
+const { app, server } = require("./config/server");
 
 //view
 app.use("/static", express.static("public", { dotfiles: "deny", etag: true }));
@@ -64,6 +64,9 @@ app.use("/api/v1/signup", apisignup);
 const apisignin = require("./routes/api-signin");
 app.use("/api/v1/signin", apisignin);
 
+const logout = require("./routes/api-logout");
+app.use("/logout", logout);
+
 const apiUsername = require("./routes/api-username");
 app.use("/api/v1/username", apiUsername);
 
@@ -108,6 +111,6 @@ app.get("/test", (req, res) => {
 //server config
 const port = process.env.NODE_ENV === "production" ? process.env.PORT : 5000;
 
-httpsServer.listen(port, () => {
-    console.log(`server is up @http://localhost:${port}`);
+server.listen(port, () => {
+    console.log(`server is up :${port}`);
 });
