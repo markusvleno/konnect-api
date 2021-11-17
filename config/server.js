@@ -6,7 +6,7 @@ const path = require("path");
 
 let server;
 
-if (process.env.NODE_ENV== 'production') {
+if (process.env.NODE_ENV=="production") {
     server = https.createServer(
     {
         key: fs.readFileSync(path.join(__dirname, "..", "cert", "key.pem")),
